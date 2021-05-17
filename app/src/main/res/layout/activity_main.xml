@@ -47,4 +47,10 @@
         android:layout_height="wrap_content"
         android:text="Registrar" />
 
+    <TextView
+        android:id="@+id/contador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
 </LinearLayout>
