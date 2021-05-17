@@ -20,15 +20,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText edit1, edit2;
     private Button btn1, btnRegistar;
     private String valor;
-<<<<<<< HEAD
+    String nombreregistro = "123";
+    String pass = "123";
 
-
-=======
-    private String contadors;
->>>>>>> upstream/main
     private SharedPreferences preferences;
-    int c=0;
-    private TextView textocontador;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,38 +36,55 @@ public class MainActivity extends AppCompatActivity {
         btn1 = findViewById(R.id.btn1);
         edit2 = findViewById(R.id.edit2);
         btnRegistar = findViewById(R.id.btnRegistar);
-        textocontador= findViewById(R.id.contador);
 
         preferences = getSharedPreferences("Preference", Context.MODE_PRIVATE);
 
-        //recibirdatos();
+
+
+
+        Intent intentReceived = getIntent();
+        Bundle data = intentReceived.getExtras();
+        if(data != null){
+            nombreregistro = data.getString("nombreregistro");
+            pass = data.getString("pass");
+
+
+            edit1.setText(nombreregistro);
+            edit2.setText(pass);
+        }
+
+
+       // Bundle extras = getIntent().getExtras();
+       // String d1 = extras.getString("nombreregistro");
+
+      //  recibirdatos();
 
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
                 String textoEdit1 = edit1.getText().toString();
-                String textotextocontador=textocontador.getText().toString();
+                String textoEdit2 = edit2.getText().toString();
                 text1.setText(textoEdit1);
-               // textocontador.setText(textotextocontador);
                 if (isValidForm()) {
                     Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
-                    saveShared(textoEdit1);
+                    if (nombreregistro.equals(edit1.getText().toString())||(getSharedNombre().equals(edit1.getText().toString()))){
+                        if (pass.equals(edit2.getText().toString())||(getSharedPass().equals(edit2.getText().toString()))){
+                            Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                            saveShared(textoEdit1);
+                            saveSharedPass(textoEdit2);
+                            sendSecondActivity(textoEdit1);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Contraseña Invalido", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                    Toast.makeText(getApplicationContext(), "Nombre Invalido", Toast.LENGTH_LONG).show();
+                    }
 
-                    int aux=c+1;
-                    contadors=String.valueOf(aux);
-                    saveShared2(contadors);
-                    textocontador.setText(contadors);
-                    c=aux;
-                    sendSecondActivity(textoEdit1);
-
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> upstream/main
+
                 } else {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }
@@ -91,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String d1 = extras.getString("nombreregistro");
 
+
+        if (d1.isEmpty()){
+            text1.setText("");
+        }
         text1.setText(d1);
 
     }
@@ -98,13 +115,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-<<<<<<< HEAD
-      //  text1.setText( "Nombre guardado: "+getSharedNombre());
-
-=======
         text1.setText( "Nombre guardado: "+getSharedNombre());
-        textocontador.setText("numero de intentos "+getSharedcontador());
->>>>>>> upstream/main
+
     }
 
     private boolean isValidForm() {
@@ -128,38 +140,33 @@ public class MainActivity extends AppCompatActivity {
     private void sendSecondActivity(String nombre) {
         Intent intent = new Intent(MainActivity.this, Activity2.class);
         Bundle b = new Bundle();
-        b.putString("nombre", nombre);
+        b.putString("nombreregistro", nombre);
         intent.putExtras(b);
         startActivity(intent);
     }
 
     private void saveShared(String nombre){
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString( "nombre",nombre);
+        editor.putString( "nombreregistro",nombre);
         editor.apply();
-
     }
-    private void saveShared2(String contador){
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString( "contador",contador);
-        editor.apply();
 
-    }
-    private void funcont(){
-
-    }
     private String getSharedNombre(){
-        return preferences.getString( "nombre","");
+        return preferences.getString( "nombreregistro","");
     }
-<<<<<<< HEAD
 
-
-
-=======
-    private String getSharedcontador(){
-        return preferences.getString( "contador","");
+    private void saveSharedPass(String pass){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString( "pass",pass);
+        editor.apply();
     }
->>>>>>> upstream/main
+
+    private String getSharedPass(){
+        return preferences.getString( "pass","");
+    }
+
+
+
 }
 
 

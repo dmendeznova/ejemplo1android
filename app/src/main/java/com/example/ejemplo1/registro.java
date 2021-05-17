@@ -41,10 +41,22 @@ public class registro extends AppCompatActivity {
             public void onClick(View v) {
                     if (isValidForm()) {
                         Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
-
+                        cargarPreferencias();
+                        SharedPreferences preferences = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+                        String nombre = editNombre.getText().toString();
+                        String pass = editPass.getText().toString();
 
                         guardarPreferencias();
                         sendRegistrarActivity();
+
+                        Intent intent = new Intent(registro.this, MainActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("nombreregistro", nombre);
+                        b.putString("pass", pass);
+                        intent.putExtras(b);
+                        startActivity(intent);
+
+                      //  sendSecondActivityRegistro(getSharedNombreRegistro());
 
                         //Intent i = new Intent(registro.this, MainActivity.class);
                        // i.putExtra("nombreregistro",getSharedNombreRegistro());
@@ -81,18 +93,24 @@ public class registro extends AppCompatActivity {
         super.onStart();
         cargarPreferencias();
 
-        //text1.setText( "Nombre guardado: "+getSharedNombre());
+       //text1.setText( "Nombre guardado: "+getSharedNombre());
+
+
 
     }
 
     private void cargarPreferencias() {
         SharedPreferences preferences = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        String nombre=preferences.getString("nombre"," ");
+        String nombre=preferences.getString("nombreregistro"," ");
         String rut=preferences.getString("rut"," ");
         String pass=preferences.getString("pass"," ");
-        editNombre.setText(nombre);
-        editRut.setText(pass);
-        editPass.setText(pass);
+        //editNombre.setText(nombre);
+        //editRut.setText(rut);
+        //editPass.setText(pass);
+
+        Intent i = new Intent(registro.this, MainActivity.class);
+        i.putExtra("nombreregistro","David Alonso");
+        //startActivity(i);
     }
 
     private void guardarPreferencias(){
@@ -101,7 +119,7 @@ public class registro extends AppCompatActivity {
         String rut = editRut.getText().toString();
         String pass = editRut.getText().toString();
          SharedPreferences.Editor editor = preferences.edit();
-         editor.putString("nombre",nombre);
+         editor.putString("nombreregistro",nombre);
         editor.putString("rut",rut);
          editor.putString("pass",pass);
          editNombre.setText(nombre);
@@ -113,9 +131,16 @@ public class registro extends AppCompatActivity {
     }
 
     private String getSharedNombreRegistro() {
-        return preferences.getString("nombre", "");
+        return preferences.getString("nombreregistro", "");
     }
 
+    private void sendSecondActivityRegistro(String nombre) {
+        Intent intent = new Intent(registro.this, MainActivity.class);
+        Bundle b = new Bundle();
+        b.putString("nombreregistro", nombre);
+        intent.putExtras(b);
+        startActivity(intent);
+    }
 
 
 }

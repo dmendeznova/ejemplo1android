@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.ejemplo1.MainActivity;
 
-
+//test
 
 public class splash extends AppCompatActivity {
 
