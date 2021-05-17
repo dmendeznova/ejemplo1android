@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ejemplo1</string>
+    <string name="text1">Nombre</string>
+    <string name="text2">Contrasena</string>
+    <string name="textAtras">Volver</string>
+    <string name="textButton">Button</string>
+    <string name="textconfirmar">Confirmar Accion</string>
+</resources>
